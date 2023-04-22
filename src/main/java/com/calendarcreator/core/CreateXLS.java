@@ -29,12 +29,11 @@ public class CreateXLS {
 	 * @param filename name and location of the spreadsheet
 	 * @param year year of the couorse
 	 * @param nameCourse name of the course
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception IO and Parse exception
 	 */
 	public static void createCalendar(List<CalendarCourse> calendarCourses, List<CourseIntake> courseIntakes,
 			List<Integer> deliveryWeekDates, String filename, int year, String nameCourse)
-			throws IOException, ParseException {
+			throws Exception{
 		Calendar calendar = Calendar.getInstance();
 		HSSFWorkbook wb = new HSSFWorkbook();
 		Map<String, CellStyle> styles = createStyles(wb);
@@ -117,7 +116,7 @@ public class CreateXLS {
 						calendar.set(Calendar.DAY_OF_MONTH, ++day);
 						if (isHoliday) {
 							if (calendar.get(Calendar.WEEK_OF_YEAR) != 1
-									&& calendar.get(Calendar.MONTH) == 0) {
+									&& calendar.get(Calendar.MONTH) == Calendar.JANUARY) {
 								dayCell.setCellStyle(styles.get("workday_left"));
 							} else {
 								dayCell.setCellStyle(styles.get("holiday"));
@@ -172,8 +171,8 @@ public class CreateXLS {
 
 	/**
 	 * create the styles for the spreadsheet
-	 * @param wb
-	 * @return
+	 * @param wb create a spreadsheet file
+	 * @return a map with style for spreadsheet
 	 */
 	private static Map<String, CellStyle> createStyles(HSSFWorkbook wb) {
 		Map<String, CellStyle> styles = new HashMap<>();

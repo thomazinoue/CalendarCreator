@@ -74,11 +74,7 @@ public class InitialFrame extends JFrame {
 		jScrollPane1.setViewportView(jTextAreaUnits);
 
 		jButtonCreate.setText("Create");
-		jButtonCreate.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButtonCreateActionPerformed();
-			}
-		});
+		jButtonCreate.addActionListener(evt -> jButtonCreateActionPerformed());
 
 		ItemListener itemListener = itemEvent -> {
 			if (itemEvent.getStateChange() == ItemEvent.SELECTED) {
@@ -258,7 +254,7 @@ public class InitialFrame extends JFrame {
 						}
 						CreateXLS.createCalendar(mapCC.get(i), mapCI.get(i), deliveryWeekDates, path, i,
 								jTextCourse.getText().trim());
-					} catch (IOException | ParseException e) {
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
