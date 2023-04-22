@@ -1,8 +1,6 @@
 package com.calendarcreator.core;
 
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
