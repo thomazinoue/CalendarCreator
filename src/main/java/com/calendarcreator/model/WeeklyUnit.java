@@ -1,10 +1,5 @@
 package com.calendarcreator.model;
 
-import java.text.ParseException;
-import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.List;
-
 public class WeeklyUnit {
 
 	private boolean isHoliday;
