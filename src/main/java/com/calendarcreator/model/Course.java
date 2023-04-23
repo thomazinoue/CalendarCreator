@@ -4,22 +4,22 @@ import java.util.List;
 
 public class Course {
 
-	private int yearStart;
-	private List<Unit> units;
+	private int year;
+	private List<String> units;
 
-	public int getYearStart() {
-		return yearStart;
+	public int getYear() {
+		return year;
 	}
 
-	public void setYearStart(int yearStart) {
-		this.yearStart = yearStart;
+	public void setYear(int year) {
+		this.year = year;
 	}
 
-	public List<Unit> getUnits() {
+	public List<String> getUnits() {
 		return units;
 	}
 
-	public void setUnits(List<Unit> units) {
+	public void setUnits(List<String> units) {
 		this.units = units;
 	}
 }

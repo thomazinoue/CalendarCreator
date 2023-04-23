@@ -1,7 +1,6 @@
 package com.calendarcreator.core;
 
 import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -13,23 +12,21 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 
-import com.calendarcreator.model.CalendarCourse;
+import com.calendarcreator.model.WeeklyUnit;
 import com.calendarcreator.model.CalendarDictionary;
-import com.calendarcreator.model.CourseIntake;
 
 public class CreateXLS {
 
 	/**
 	 * create the spreadsheet with all content for the year
-	 * @param calendarCourses list courses and holidays
-	 * @param courseIntakes list of every intake class
+	 * @param calendarCours list courses and holidays
 	 * @param deliveryWeekDates week days of classes
 	 * @param filename name and location of the spreadsheet
 	 * @param year year of the couorse
 	 * @param nameCourse name of the course
 	 * @throws Exception IO and Parse exception
 	 */
-	public static void createCalendar(List<CalendarCourse> calendarCourses, List<CourseIntake> courseIntakes,
+	public static void createCalendar(List<WeeklyUnit> calendarCours,
 			List<Integer> deliveryWeekDates, String filename, int year, String nameCourse)
 			throws Exception{
 		Calendar calendar = Calendar.getInstance();
@@ -37,7 +34,7 @@ public class CreateXLS {
 		Map<String, CellStyle> styles = createStyles(wb);
 		int rownum = 0;
 		Sheet sheet = wb.createSheet("Calendar");
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		var dateFormat = CalendarDictionary.DATE_FORMAT;
 
 		Row headerRow = sheet.createRow(rownum++);
 		headerRow.setHeightInPoints(60);
@@ -82,12 +79,12 @@ public class CreateXLS {
 				String weekDescription = "";
 				boolean isHoliday = false;
 
-				for (CalendarCourse calendarCourse : calendarCourses) {
+				for (WeeklyUnit weeklyUnit : calendarCours) {
 					Calendar startDate = Calendar.getInstance();
-					startDate.setTime(sdf.parse(calendarCourse.getStartDate()));
+					startDate.setTime(dateFormat.parse(weeklyUnit.getStartDate()));
 
 					Calendar endDate = Calendar.getInstance();
-					endDate.setTime(sdf.parse(calendarCourse.getEndDate()));
+					endDate.setTime(dateFormat.parse(weeklyUnit.getEndDate()));
 
 					if (startDate.before(calendar) && endDate.after(calendar)
 							|| (startDate.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH)
@@ -96,11 +93,11 @@ public class CreateXLS {
 							|| (endDate.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH)
 									&& endDate.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
 									&& endDate.get(Calendar.YEAR) == calendar.get(Calendar.YEAR))) {
-						if (calendarCourse.isHoliday()) {
+						if (weeklyUnit.isHoliday()) {
 							weekDescription = CalendarDictionary.HOLIDAY;
 							isHoliday = true;
 						} else {
-							weekDescription = calendarCourse.getUnitName();
+							weekDescription = weeklyUnit.getUnitName();
 						}
 						break;
 					}
@@ -137,29 +134,6 @@ public class CreateXLS {
 				if (calendar.get(Calendar.MONTH) > month)
 					break;
 			}
-		}
-
-		rownum = 0;
-		int cellNum = 0;
-		sheet = wb.createSheet("Course Intake");
-		headerRow = sheet.createRow(rownum++);
-		for (String header : CalendarDictionary.COURSE_INTAKE_HEADER) {
-			Cell headerCell = headerRow.createCell(cellNum++);
-			headerCell.setCellValue(header);
-			headerCell.setCellStyle(styles.get("courseIntakeHeader"));
-		}
-
-		for (CourseIntake courseIntake : courseIntakes) {
-			headerRow = sheet.createRow(rownum++);
-			Cell cell = headerRow.createCell(0);
-			cell.setCellValue(courseIntake.getStartDate());
-			cell.setCellStyle(styles.get("courseIntake"));
-			cell = headerRow.createCell(1);
-			cell.setCellValue(courseIntake.getEndDate());
-			cell.setCellStyle(styles.get("courseIntake"));
-			cell = headerRow.createCell(2);
-			cell.setCellValue(courseIntake.getDuration());
-			cell.setCellStyle(styles.get("courseIntake"));
 		}
 
 		FileOutputStream out = new FileOutputStream(filename);
