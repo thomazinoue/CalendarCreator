@@ -46,7 +46,7 @@ public class CreateCalendar {
             weeklyUnit.setStartDate(dateFormat.format(startDate.getTime()));
             weeklyUnit.setEndDate(dateFormat.format(endWeekDate.getTime()));
 
-            if (isPublicHoliday(dateFormat.format(startDate.getTime()), dateFormat.format(endWeekDate.getTime()))) {
+            if (isPublicHoliday(startDate, endWeekDate)) {
                 weeklyUnit.setUnitName(CalendarDictionary.HOLIDAY);
                 weeklyUnit.setHoliday(true);
                 normalWeek = 0;
@@ -86,27 +86,20 @@ public class CreateCalendar {
      * and false if there is no public holiday
      * @throws ParseException from simpleDateFormat
      */
-    private boolean isPublicHoliday(String startDate, String endDate) throws ParseException {
-        var dateFormat = CalendarDictionary.DATE_FORMAT;
+    private boolean isPublicHoliday(Calendar startDate, Calendar endDate) throws ParseException {
 
-        Calendar unitStartDate = Calendar.getInstance();
-        unitStartDate.setTime(dateFormat.parse(startDate));
-
-        Calendar unitEndDate = Calendar.getInstance();
-        unitEndDate.setTime(dateFormat.parse(endDate));
-
-        while (unitStartDate.before(unitEndDate) || unitStartDate.equals(unitEndDate)) {
-            if (unitStartDate.get(Calendar.DAY_OF_MONTH) == 25 && unitStartDate.get(Calendar.MONTH) == Calendar.DECEMBER
-                    || unitStartDate.get(Calendar.DAY_OF_MONTH) == 1 && unitStartDate.get(Calendar.MONTH) == Calendar.JANUARY
-                    || unitStartDate.get(Calendar.DAY_OF_MONTH) == 2 && unitStartDate.get(Calendar.MONTH) == Calendar.JANUARY
-                    || unitStartDate.get(Calendar.DAY_OF_MONTH) == 19 && unitStartDate.get(Calendar.MONTH) == Calendar.SEPTEMBER
-                    && unitStartDate.get(Calendar.YEAR) == 2016
-                    || unitStartDate.get(Calendar.DAY_OF_MONTH) == 26 && unitStartDate.get(Calendar.MONTH) == Calendar.SEPTEMBER
-                    && unitStartDate.get(Calendar.YEAR) == 2016
-                    || unitStartDate.get(Calendar.WEEK_OF_YEAR) == 1) {
+        while (startDate.before(endDate) || startDate.equals(endDate)) {
+            if (startDate.get(Calendar.DAY_OF_MONTH) == 25 && endDate.get(Calendar.MONTH) == Calendar.DECEMBER
+                    || startDate.get(Calendar.DAY_OF_MONTH) == 1 && startDate.get(Calendar.MONTH) == Calendar.JANUARY
+                    || startDate.get(Calendar.DAY_OF_MONTH) == 2 && startDate.get(Calendar.MONTH) == Calendar.JANUARY
+                    || startDate.get(Calendar.DAY_OF_MONTH) == 19 && startDate.get(Calendar.MONTH) == Calendar.SEPTEMBER
+                    && startDate.get(Calendar.YEAR) == 2016
+                    || startDate.get(Calendar.DAY_OF_MONTH) == 26 && startDate.get(Calendar.MONTH) == Calendar.SEPTEMBER
+                    && startDate.get(Calendar.YEAR) == 2016
+                    || startDate.get(Calendar.WEEK_OF_YEAR) == 1) {
                 return true;
             }
-            unitStartDate.add(Calendar.DAY_OF_YEAR, 1);
+            startDate.add(Calendar.DAY_OF_YEAR, 1);
         }
         return false;
     }
