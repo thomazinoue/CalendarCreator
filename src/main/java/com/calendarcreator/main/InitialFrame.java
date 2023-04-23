@@ -27,7 +27,6 @@ public class InitialFrame extends JFrame {
 	private javax.swing.JTextField jTextCourse;
 	private javax.swing.JTextField jTextYearStart;
 	private List<Integer> deliveryWeekDates;
-	private javax.swing.JLabel jLabelTo;
 	private javax.swing.JTextField jTextYearEnd;
 
 	public InitialFrame() {
@@ -52,7 +51,7 @@ public class InitialFrame extends JFrame {
 		jCheckFri = new javax.swing.JCheckBox();
 		jCheckThu = new javax.swing.JCheckBox();
 		jCheckSat = new javax.swing.JCheckBox();
-		jLabelTo = new javax.swing.JLabel();
+		javax.swing.JLabel jLabelTo = new javax.swing.JLabel();
 		jTextYearEnd = new javax.swing.JTextField();
 		deliveryWeekDates = new LinkedList<>();
 
@@ -218,15 +217,14 @@ public class InitialFrame extends JFrame {
 			int yearStart = Integer.parseInt(jTextYearStart.getText());
 			int yearEnd = Integer.parseInt(jTextYearEnd.getText());
 			for (int i = yearStart; i <= yearEnd ; i++) {
-				/**
-				 * every line is a different unit, if unit lasts more than a week,
-				 * user needs to repeat the unit in the textPanel
+				/*
+				  every line is a different unit, if unit lasts more than a week,
+				  user needs to repeat the unit in the textPanel
 				 */
-				List<String> listUnit = new LinkedList<>();
 				String[] units = jTextAreaUnits.getText().trim().split("\n");
-				Arrays.stream(units).forEach(s -> listUnit.add(s));
+				List<String> listUnit = new LinkedList<>(Arrays.asList(units));
 
-				Course course = new Course();
+				var course = new Course();
 				course.setYear(i);
 				course.setUnits(listUnit);
 				try {

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CreateCalendar {
 
-    private Course course;
+    private final Course course;
 
     public CreateCalendar(Course course){
         this.course = course;
