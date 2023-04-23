@@ -265,6 +265,7 @@ public class InitialFrame extends JFrame {
 	private void cleanForm() {
 		jTextCourse.setText("");
 		jTextYearStart.setText("");
+		jTextYearEnd.setText("");
 		jCheckMon.setSelected(false);
 		jCheckTue.setSelected(false);
 		jCheckWed.setSelected(false);
