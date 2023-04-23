@@ -84,7 +84,6 @@ public class CreateCalendar {
      * @param endDate end of the period
      * @return a boolean true if there is a public holiday in between those given dates,
      * and false if there is no public holiday
-     * @throws ParseException from simpleDateFormat
      */
     private boolean isPublicHoliday(Calendar startDate, Calendar endDate){
 
