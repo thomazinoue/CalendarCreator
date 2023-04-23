@@ -86,7 +86,7 @@ public class CreateCalendar {
      * and false if there is no public holiday
      * @throws ParseException from simpleDateFormat
      */
-    private boolean isPublicHoliday(Calendar startDate, Calendar endDate) throws ParseException {
+    private boolean isPublicHoliday(Calendar startDate, Calendar endDate){
 
         while (startDate.before(endDate) || startDate.equals(endDate)) {
             if (startDate.get(Calendar.DAY_OF_MONTH) == 25 && endDate.get(Calendar.MONTH) == Calendar.DECEMBER
