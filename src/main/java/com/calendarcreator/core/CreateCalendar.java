@@ -13,12 +13,14 @@ public class CreateCalendar {
 
     private final Course course;
 
-    public CreateCalendar(Course course){
+    public CreateCalendar(Course course) {
         this.course = course;
     }
+
     /**
      * Creates a list with every week's unit and putting a three weeks holiday every
      * 10 weeks of class
+     *
      * @return a list of one year of Course
      * @throws ParseException exception from simpleDateFormat
      */
@@ -34,7 +36,7 @@ public class CreateCalendar {
         endWeekDate.setTime(startDate.getTime());
 
         //set the end date to Saturday as last day of the week
-        while(endWeekDate.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY) {
+        while (endWeekDate.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY) {
             endWeekDate.add(Calendar.DAY_OF_MONTH, 1);
         }
 
@@ -80,12 +82,13 @@ public class CreateCalendar {
     /**
      * TODO Create a algorithm to find the easter holiday
      * Check if there is a public holiday in between the given period
+     *
      * @param startDate start of the period
-     * @param endDate end of the period
+     * @param endDate   end of the period
      * @return a boolean true if there is a public holiday in between those given dates,
      * and false if there is no public holiday
      */
-    private boolean isPublicHoliday(Calendar startDate, Calendar endDate){
+    private boolean isPublicHoliday(Calendar startDate, Calendar endDate) {
 
         while (startDate.before(endDate) || startDate.equals(endDate)) {
             if (startDate.get(Calendar.DAY_OF_MONTH) == 25 && endDate.get(Calendar.MONTH) == Calendar.DECEMBER
